@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home library</title>
+</head>
+<body>
+    <h2> Zmień: </h2>
+    <form method="POST" action="/books/{{ book_id }}/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Update">
+    </form>
+
+    <h2> Add authors: </h2>
+
+    {% for author in authors %}
+        <form method="POST" action="/books/{{ book_id }}/{{ author.id }}/">
+            <input type="text" value="{{ author.first_name }} {{ author.last_name }}"/>
+            <input type="submit" value="Add">
+        </form>
+    {% endfor %}
+
+
+</body>
+</html>
